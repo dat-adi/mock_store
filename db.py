@@ -182,7 +182,7 @@ class DB:
                     owner_id = %s
                 WHERE id = %s;
                 """,
-                (pet.name, pet.animal_type, pet.breed, pet.price, pet.owner_id, pet.id)
+            (pet.name, pet.animal_type, pet.breed, pet.price, pet.owner_id, pet.id),
         )
 
         cls.conn.commit()

@@ -93,7 +93,7 @@ def update_pet(p_id: int):
             form.p_animal_type.data,
             form.p_breed.data,
             form.p_price.data,
-            form.p_owner_id.data
+            form.p_owner_id.data,
         )
         try:
             pet_db.update_pet_in_db(pet)

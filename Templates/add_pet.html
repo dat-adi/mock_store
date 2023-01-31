@@ -1,25 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.p_id.label }}
-        {{ form.p_id }}
-        <br>
-        {{ form.p_name.label }}
-        {{ form.p_name }}
-        <br>
-        {{ form.p_animal_type.label }}
-        {{ form.p_animal_type }}
-        <br>
-        {{ form.p_breed.label }}
-        {{ form.p_breed }}
-        <br>
-        {{ form.p_price.label }}
-        {{ form.p_price }}
-        <br>
-        {{ form.p_owner_id.label }}
-        {{ form.p_owner_id }}
-        <br>
-        {{ form.submit }}
-    </form>
+    <div class="container">
+        <h1>Add a friend.</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ form.p_id.label }}
+                </label>
+                <br>
+                {{ form.p_id }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ form.p_name.label }}
+                </label>
+                <br>
+            {{ form.p_name }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ form.p_animal_type.label }}
+                </label>
+                <br>
+                {{ form.p_animal_type }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ form.p_breed.label }}
+                </label>
+                <br>
+            {{ form.p_breed }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ form.p_price.label }}
+                </label>
+                <br>
+            {{ form.p_price }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+            {{ form.p_owner_id.label }}
+                </label>
+                <br>
+            {{ form.p_owner_id }}
+            </div>
+            {{ form.submit }}
+        </form>
+    </div>
 {% endblock %}
