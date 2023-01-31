@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table>
+        <tr>
+            <th>Pet ID</th>
+            <th>Name</th>
+            <th>Animal Type</th>
+            <th>Animal Breed</th>
+            <th>Price</th>
+            <th>Owner ID</th>
+        </tr>
+        {% for pet in pets %}
+            <tr>
+                <td>{{ pet[0] }}</td>
+                <td>{{ pet[1] }}</td>
+                <td>{{ pet[2] }}</td>
+                <td>{{ pet[3] }}</td>
+                <td>{{ pet[4] }}</td>
+                <td>{{ pet[5] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
