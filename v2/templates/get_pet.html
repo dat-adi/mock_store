@@ -1,0 +1,8 @@
+{% block content %}
+<h1>{{ pet.name }}</h1>
+<h2>{{ pet.animal }}</h2>
+<p>{{ pet.price }}</p>
+<p>{{ pet.owner_id }}</p>
+<button href="{{ url_for('update_pet', id = pet.id) }}">Edit</button>
+<button href="{{ url_for('delete_pet', id = pet.id) }}">Delete</button>
+{% endblock %}

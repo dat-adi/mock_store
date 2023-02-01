@@ -1,0 +1,6 @@
+{% block content %}
+<h1>{{ owner.name }}</h1>
+<h2>{{ owner.phone }}</h2>
+<button href="{{ url_for('update_owner', id = owner.id) }}">Edit</button>
+<button href="{{ url_for('delete_owner', id = owner.id) }}">Delete</button>
+{% endblock %}

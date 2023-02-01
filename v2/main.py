@@ -25,11 +25,17 @@ db_conn: DatabaseConnection = DatabaseConnection()
 def index():
     return render_template("index.html")
 
+# Pets
+
 @app.route("/pets")
 def get_pets():
     pets = db_conn.get_pets()
     return render_template("get_pets.html", pets=pets)
 
+@app.route("/pet/<id>")
+def get_pet(id: int):
+    pet: Pet = db_conn.get_pet(id)
+    return render_template("get_pet.html", pet=pet)
 
 @app.route("/pets/add", methods=["GET", "POST"])
 def add_pet():
@@ -64,10 +70,17 @@ def delete_pet(id: int):
     db_conn.delete_pet(id)
     return redirect(url_for("get_pets"))
 
+# Owners
+
 @app.route("/owners")
 def get_owners():
     owners = db_conn.get_owners()
     return render_template("get_owners.html", owners=owners)
+
+@app.route("/owner/<id>")
+def get_owner(id: int):
+    owner = db_conn.get_owner(id)
+    return render_template("get_owner.html", owner=owner)
 
 @app.route("/owners/add", methods=["GET", "POST"])
 def add_owner():
@@ -102,6 +115,6 @@ def delete_owner(id: int):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename=f"logs/tmp.log", level=logging.INFO)
+    logging.basicConfig(filename="logs/tmp.log", level=logging.INFO)
     db_conn.create_tables()
     app.run(debug=True)
