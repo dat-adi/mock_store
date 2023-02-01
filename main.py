@@ -5,7 +5,7 @@ and the calls that are to be made to the different components.
 
 @author: G V Datta Adithya
 """
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask, redirect, render_template, url_for, request
 from forms import AnimalForm
 from db import Pet, DB
 
@@ -61,32 +61,53 @@ def add_pet():
         return redirect(url_for("get_pets"))
     return render_template("add_pet.html", form=form)
 
-
 @app.route("/update_pet/<p_id>", methods=["GET", "POST"])
 def update_pet(p_id: int):
     """
     Update a Pet in the store based on the ID.
     """
-    # TODO: Broken
-    form: AnimalForm = AnimalForm()
+
+    form = AnimalForm()
     pet_db: DB = DB()
     pet_db.connect_db()
+    pet_details = pet_db.get_pet(p_id)
 
-    try:
-        pet = pet_db.get_pet(p_id)
-    except TypeError:
-        return redirect(url_for("index"))
-    except Exception as err:
-        return str(err)
-
-    form.p_id.data = pet[0]
-    form.p_name.data = pet[1]
-    form.p_animal_type.data = pet[2]
-    form.p_breed.data = pet[3]
-    form.p_price.data = pet[4]
-    form.p_owner_id.data = pet[5]
+    form.p_id.data = pet_details[0]
+    form.p_name.data = pet_details[1]
+    form.p_animal_type.data = pet_details[2]
+    form.p_breed.data = pet_details[3]
+    form.p_price.data = pet_details[4]
+    form.p_owner_id.data = pet_details[5]
 
     if form.validate_on_submit():
+        pet = Pet(
+            form.p_id.data,
+            form.p_name.data,
+            form.p_animal_type.data,
+            form.p_breed.data,
+            form.p_price.data,
+            form.p_owner_id.data,
+        )
+
+        pet_db.update_pet_in_db(pet)
+
+        return redirect(url_for("get_pets"))
+
+    return render_template("update_pet.html", form=form)
+
+
+@app.route("/update_pet/<p_id>", methods=["GET", "POST"])
+def update_pet_old(p_id: int):
+    """
+    Update a Pet in the store based on the ID.
+    """
+    # TODO: Broken
+    form: AnimalForm = AnimalForm()
+
+    if form.validate_on_submit():
+        pet_db: DB = DB()
+        pet_db.connect_db()
+
         pet: Pet = Pet(
             form.p_id.data,
             form.p_name.data,
@@ -101,7 +122,6 @@ def update_pet(p_id: int):
             return str(err)
 
         return redirect(url_for("get_pets"))
-
     return render_template("update_pet.html", form=form)
 
 
