@@ -3,7 +3,7 @@
 This is a form class holder.
 """
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, SelectField, StringField, SubmitField, validators
+from wtforms import IntegerField, SelectField, StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
