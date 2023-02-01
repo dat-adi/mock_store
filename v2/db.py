@@ -63,11 +63,17 @@ class DatabaseConnection:
     The database connection class.
     """
 
-    def __init__(self):
-        self.conn = psycopg2.connect(
-            database="postgres", user="postgres", password="Finserv@2023"
-        )
-        self.cur = self.conn.cursor()
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            print("Creating the database")
+            cls.conn = psycopg2.connect(
+                database="postgres", user="postgres", password="Finserv@2023"
+            )
+            cls.cur = cls.conn.cursor()
+            cls._instance = super(DatabaseConnection, cls).__new__(cls)
+        return cls._instance
 
     def get_connection(self):
         return self.conn

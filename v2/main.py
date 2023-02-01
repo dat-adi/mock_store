@@ -12,6 +12,7 @@ from db import Pet, Owner, DatabaseConnection
 # Forms that can be used for the operations.
 from forms import PetRegistrationForm, OwnerRegistrationForm
 
+# Logging for the application
 import logging
 
 app = Flask(__name__)
@@ -24,11 +25,9 @@ db_conn: DatabaseConnection = DatabaseConnection()
 def index():
     return render_template("index.html")
 
-
 @app.route("/pets")
 def get_pets():
     pets = db_conn.get_pets()
-    print(pets)
     return render_template("get_pets.html", pets=pets)
 
 
@@ -37,7 +36,7 @@ def add_pet():
     form = PetRegistrationForm()
     if form.validate_on_submit():
         db_conn.add_pet(form)
-        return redirect(url_for("index"))
+        return redirect(url_for("get_pets"))
     return render_template("add_pet.html", form=form)
 
 
@@ -63,7 +62,7 @@ def update_pet(id: int):
 @app.route("/pets/delete/<id>")
 def delete_pet(id: int):
     db_conn.delete_pet(id)
-    return render_template("get_pets.html")
+    return redirect(url_for("get_pets"))
 
 @app.route("/owners")
 def get_owners():
@@ -75,7 +74,7 @@ def add_owner():
     form = OwnerRegistrationForm()
     if form.validate_on_submit():
         db_conn.add_owner(form)
-        return redirect(url_for("index"))
+        return redirect(url_for("get_owners"))
     return render_template("add_owner.html", form=form)
 
 
@@ -99,8 +98,10 @@ def update_owner(id: int):
 @app.route("/owners/delete/<id>")
 def delete_owner(id: int):
     db_conn.delete_owner(id)
-    return render_template("get_owners.html")
+    return redirect(url_for("get_owners"))
+
 
 if __name__ == "__main__":
+    logging.basicConfig(filename=f"logs/tmp.log", level=logging.INFO)
     db_conn.create_tables()
     app.run(debug=True)
